@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "name": "Admin User",
+    "email": "admin@intellistock.com",
+    "password_hash": "$2b$12$236HkFzsFCT44t5K1vm78ubWH5ln8O.Y2M3pm4Z4gpOpTpbgnLOAi",
+    "role": "admin"
+  },
+  {
+    "id": 2,
+    "name": "Manager User",
+    "email": "manager@intellistock.com",
+    "password_hash": "$2b$12$xilfVhgdmiBuCNOeqVgWR.67WDxInKe5MtOrbcbgCpMG/qjXDhwnu",
+    "role": "manager"
+  }
+]
