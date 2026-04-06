@@ -47,9 +47,26 @@ const startServer = async () => {
   await testConnection();
   
   // Sync DB
-  if (process.env.NODE_ENV !== 'production') {
-    await sequelize.sync();
+  try {
+    await sequelize.sync({ alter: true });
     logger.info('Database synced successfully.');
+    
+    // Auto-seed admin user to ensure login works immediately
+    const User = require('./models/User');
+    const bcrypt = require('bcrypt');
+    const existingAdmin = await User.findOne({ where: { email: 'admin@test.com' } });
+    if (!existingAdmin) {
+      const hashedPassword = await bcrypt.hash('password', 10);
+      await User.create({
+        name: 'System Admin',
+        email: 'admin@test.com',
+        password_hash: hashedPassword,
+        role: 'admin'
+      });
+      logger.info('Seeded admin user (admin@test.com)');
+    }
+  } catch (err) {
+    logger.error('Database sync failed: ' + err);
   }
 
   app.listen(PORT, () => {
